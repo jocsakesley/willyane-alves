@@ -1,0 +1,35 @@
+{% extends "administration/base_admin.html" %}
+{% block content %}
+<div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid">
+                        <div class="container" style="padding-top:30px">
+                             <h1 class="mt-5">{{customer_detail.name}} {{customer_detail.last_name}}</h1>
+                                    <dl>
+                                      <dt>ID</dt>
+                                      <dd>{{customer_detail.id}}</dd>
+
+                                      <dt>Telefone</dt>
+                                      <dd>{{customer_detail.phone}}</dd>
+
+                                      <dt>E-mail</dt>
+                                      <dd>{{customer_detail.email}}</dd>
+
+                                      <dt>Data de nascimento</dt>
+                                      <dd>{{customer_detail.birth|date:'d/m/Y'}}</dd>
+
+                                      <dt>CPF</dt>
+                                      <dd>{{customer_detail.cpf}}</dd>
+
+                                      <dt>Endereço</dt>
+                                      <dd>
+                                       {{customer_detail.address}}
+                                      </dd>
+                                    </dl>
+                                    <a class="btn btn-danger" href="{%url 'delete_customer' pk=customer_detail.pk%}" role="button">Excluir</a>
+
+                        </div>
+                    </div>
+                </main>
+</div>
+{% endblock %}

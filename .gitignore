@@ -1,0 +1,5 @@
+.will
+.idea
+.env
+db.sqlite3
+staticfiles

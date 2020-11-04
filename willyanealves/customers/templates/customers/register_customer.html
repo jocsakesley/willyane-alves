@@ -1,0 +1,76 @@
+{%extends "administration/base_admin.html" %}
+{% load widget_tweaks %}
+{% block content %}
+<div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid">
+                        <div class="container" style="padding-top:80px">
+                          {% for message in messages %}
+                          <div class="alert {{message.tags}}">{{message}}</div>
+                          {%endfor%}
+                            <form method="POST" action=".">{% csrf_token %}
+                              <div class="form-row">
+                                <div class="form-group col-md-6">
+                                  <label for="{{form.name.id_for_label}}">{{form.name.label}}</label>
+                                  {{form.name.errors}}
+                                    {{form.name|add_class:"form-control"}}
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <label for="{{form.last_name.id_for_label}}">{{form.last_name.label}}</label>
+                                  {{form.last_name.errors}}
+                                    {{form.last_name|add_class:"form-control"}}
+                                </div>
+                              </div>
+                              <div class="form-row">
+                                <div class="form-group col-md-4">
+                                  <label for="{{form.birth.id_for_label}}">{{form.birth.label}}</label>
+                                  {{form.birth.errors}}
+                                    {{form.birth|attr:"type:date"|add_class:"form-control"}}
+                                </div>
+                                <div class="form-group col-md-4">
+                                  <label for="{{form.cpf.id_for_label}}">{{form.cpf.label}}</label>
+                                  {{form.cpf.errors}}
+                                    {{form.cpf|add_class:"form-control"}}
+                                </div>
+                                <div class="form-group col-md-4">
+                                  <label for="{{form.sex.id_for_label}}">{{form.sex.label}}</label>
+                                  {{form.sex.errors}}
+                                    {{form.sex|add_class:"form-control"}}
+                                </div>
+                              </div>
+                              <div class="form-row">
+                                <div class="form-group col-md-6">
+                                  <label for="{{form.email.id_for_label}}">{{form.email.label}}</label>
+                                  {{form.email.errors}}
+                                    {{form.email|add_class:"form-control"}}
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <label for="{{form.phone.id_for_label}}">{{form.phone.label}}</label>
+                                  {{form.phone.errors}}
+                                    {{form.phone|add_class:"form-control"}}
+                                </div>
+                              </div>
+                              <div class="form-row">
+                                <div class="form-group col-md-6">
+                                  <label for="{{form.address.id_for_label}}">{{form.address.label}}</label>
+                                  {{form.address.errors}}
+                                    {{form.address|add_class:"form-control"}}
+                                </div>
+                                <div class="form-group col-md-3">
+                                  <label for="{{form.city.id_for_label}}">{{form.city.label}}</label>
+                                  {{form.city.errors}}
+                                    {{form.city|add_class:"form-control"}}
+                                </div>
+                                <div class="form-group col-md-3">
+                                  <label for="{{form.district.id_for_label}}">{{form.district.label}}</label>
+                                  {{form.district.errors}}
+                                    {{form.district|add_class:"form-control"}}
+                                </div>
+                              </div>
+
+                              <button type="submit" class="btn btn-primary">Sign in</button>
+                            </form>
+                        </div>
+                    </div>
+                </main>
+{%endblock%}
