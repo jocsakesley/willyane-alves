@@ -1,1 +1,1 @@
-gunicorn willyanealves.wsgi --log-file -
+web: gunicorn willyanealves.wsgi --log-file -
