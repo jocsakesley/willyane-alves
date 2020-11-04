@@ -1,0 +1,1 @@
+gunicorn willyanealves.wsgi --log-file -
