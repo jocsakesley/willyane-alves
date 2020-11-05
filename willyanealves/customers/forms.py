@@ -1,9 +1,9 @@
 from django import forms
 import datetime
 class CustomersForm(forms.Form):
-    SEX = [("M", "Masculino"), ("F", "Feminino")]
-    CITIES = [("NAT", "Natal"), ("PAR", "Parnamirim"), ("SGA", "São Gonçalo do Amarante"), ("EXT", "Extremoz"), ("CEM", "Ceará-Mirim"),
-              ("SJM", "São José de Mipibú"), ("OUT", "Outra")]
+    SEX = [("Masculino", "Masculino"), ("Feminino", "Feminino")]
+    CITIES = [("Natal", "Natal"), ("Parnamirim", "Parnamirim"), ("São Gonçalo do Amarante", "São Gonçalo do Amarante"), ("Extremoz", "Extremoz"), ("Ceará-Mirim", "Ceará-Mirim"),
+              ("São josé de Mipibu", "São José de Mipibu"), ("Outra", "Outra")]
     name = forms.CharField(label="Nome")
     last_name = forms.CharField(label="Sobrenome")
     cpf = forms.CharField(label="CPF", required=False)
