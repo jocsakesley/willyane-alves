@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.shortcuts import render, redirect
 from .forms import CustomersForm
@@ -6,12 +7,14 @@ from .models import Customer
 from django.db.models import Q, Value
 from django.db.models.functions import Concat
 
+@login_required(login_url='/accounts/')
 def register_customer(request):
     form = CustomersForm()
     if request.method == "POST":
         return create(request)
     return render(request, 'customers/register_customer.html', {'form': form})
 
+@login_required(login_url='/accounts/')
 def create(request):
     form = CustomersForm(request.POST)
     if not form.is_valid():
@@ -26,10 +29,12 @@ def create(request):
         messages.error(request, "Ocorreu um erro!", extra_tags="alert-danger")
     return render(request, 'customers/register_customer.html', {'form': form})
 
+@login_required(login_url='/accounts/')
 def list_customers(request):
     customers = Customer.objects.all().order_by("-id")
     return render(request, "customers/list_customers.html", {"customers": customers})
 
+@login_required(login_url='/accounts/')
 def detail_customers(request, pk):
     try:
         customer_detail = Customer.objects.get(pk=pk)
@@ -37,6 +42,7 @@ def detail_customers(request, pk):
         raise Http404
     return render(request, "customers/detail_customers.html", {'customer_detail': customer_detail})
 
+@login_required(login_url='/accounts/')
 def search_customer(request):
     word = request.GET.get("word")
     fields = Concat('name', Value(' '), 'last_name')
@@ -46,6 +52,7 @@ def search_customer(request):
         customers = Customer.objects.all().order_by('-id')
     return render(request, "customers/search.html", {"customers": customers})
 
+@login_required(login_url='/accounts/')
 def delete_customer(request, pk):
     try:
         Customer.objects.get(pk=pk).delete()
