@@ -4,7 +4,7 @@ from django.db import models
 class Customer(models.Model):
     name = models.CharField("Nome", max_length=255)
     last_name = models.CharField("Sobrenome", max_length=255)
-    cpf = models.CharField("CPF", max_length=14, unique=True)
+    cpf = models.CharField("CPF", max_length=14, unique=True, blank=True)
     email = models.EmailField("Email", max_length=255)
     phone = models.CharField("Telefone", max_length=14)
     sex = models.CharField("Sexo", max_length=10)

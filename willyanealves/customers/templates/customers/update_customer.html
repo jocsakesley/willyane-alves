@@ -1,0 +1,69 @@
+{%extends "administration/base_admin.html" %}
+{% load widget_tweaks %}
+{% block content %}
+<div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid">
+                        <div class="container" style="padding-top:80px">
+                          {% for message in messages %}
+                          <div class="alert {{message.tags}}">{{message}}</div>
+                          {%endfor%}
+                            <form method="POST" action=".">{% csrf_token %}
+                              <div class="form-row">
+                                <div class="form-group col-md-6">
+                                  <label for="{{form.name.id_for_label}}">{{form.name.label}}</label>
+                                  <input type="text" class="form-control" value="{{customer.name}}" name="name">
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <label for="{{form.last_name.id_for_label}}">{{form.last_name.label}}</label>
+                                  <input type="text" class="form-control" value="{{customer.last_name}}" name="last_name">
+                                </div>
+                              </div>
+                              <div class="form-row">
+                                <div class="form-group col-md-4">
+                                  <label for="{{form.birth.id_for_label}}">{{form.birth.label}}</label>
+                                  <input type="date" class="form-control" name="birth" value="{{customer.birth|date:'Y-m-d'}}">
+                                </div>
+                                <div class="form-group col-md-4">
+                                  <label for="{{form.cpf.id_for_label}}">{{form.cpf.label}}</label>
+                                  <input type="text" class="form-control" value="{{customer.cpf}}" name="cpf">
+                                </div>
+                                <div class="form-group col-md-4">
+                                  <label for="{{form.sex.id_for_label}}">{{form.sex.label}}</label>
+                                  <select class="form-control" name="sex">
+                                    <option value="{{customer.sex}}">{%if customer.sex == "F" %}Feminino{%else%}Masculino{%endif%}</option>
+                                    <option value="{%if customer.sex == 'F'%}M{%else%}F{%endif%}">{%if customer.sex == "M" %}Feminino{%else%}Masculino{%endif%}</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="form-row">
+                                <div class="form-group col-md-6">
+                                  <label for="{{form.email.id_for_label}}">{{form.email.label}}</label>
+                                  <input type="email" class="form-control" value="{{customer.email}}" name="email">
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <label for="{{form.phone.id_for_label}}">{{form.phone.label}}</label>
+                                  <input type="text" class="form-control" value="{{customer.phone}}" name="phone">
+                                </div>
+                              </div>
+                              <div class="form-row">
+                                <div class="form-group col-md-6">
+                                  <label for="{{form.address.id_for_label}}">{{form.address.label}}</label>
+                                  <input type="text" class="form-control" value="{{customer.address}}" name="address">
+                                </div>
+                                <div class="form-group col-md-3">
+                                  <label for="{{form.city.id_for_label}}">{{form.city.label}}</label>
+                                  <input type="text" class="form-control" value="{{customer.city}}" name="city">
+                                </div>
+                                <div class="form-group col-md-3">
+                                  <label for="{{form.district.id_for_label}}">{{form.district.label}}</label>
+                                  <input type="text" class="form-control" value="{{customer.district}}" name="district">
+                                </div>
+                              </div>
+
+                              <button type="submit" class="btn btn-primary">Atualizar</button>
+                            </form>
+                        </div>
+                    </div>
+                </main>
+{%endblock%}

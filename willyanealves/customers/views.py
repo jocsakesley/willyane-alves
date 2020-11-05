@@ -25,7 +25,8 @@ def create(request):
                             sex=form.cleaned_data['sex'], address=form.cleaned_data['address'], city=form.cleaned_data['city'],
                             district=form.cleaned_data['district'], birth=form.cleaned_data['birth'])
         messages.success(request, "Cliente cadastrado com sucesso!", extra_tags="alert-success")
-    except:
+    except Exception as e:
+        print(e)
         messages.error(request, "Ocorreu um erro!", extra_tags="alert-danger")
     return render(request, 'customers/register_customer.html', {'form': form})
 
@@ -60,3 +61,30 @@ def delete_customer(request, pk):
         messages.info(request, "Cliente não encontrado")
     return redirect('list_customers')
 
+@login_required(login_url='/accounts/')
+def update_customer(request, pk):
+    customer = Customer.objects.get(id=pk)
+    if request.method == "POST":
+        return update(request,pk)
+    else:
+        return render(request, "customers/update_customer.html", {"form": CustomersForm(), "customer": customer})
+
+def update(request,pk):
+    form = CustomersForm(request.POST)
+    customer = Customer.objects.get(pk=pk)
+    form.full_clean()
+    if not form.is_valid():
+        return render(request, "customers/update_customer.html", {"form": form, "customer": customer})
+    customer.name = form.cleaned_data['name']
+    customer.last_name = form.cleaned_data['last_name']
+    customer.birth = form.cleaned_data['birth']
+    customer.cpf = form.cleaned_data['cpf']
+    customer.sex = form.cleaned_data['sex']
+    customer.email = form.cleaned_data['email']
+    customer.phone = form.cleaned_data['phone']
+    customer.address = form.cleaned_data['address']
+    customer.city = form.cleaned_data['city']
+    customer.district = form.cleaned_data['district']
+    customer.save()
+    messages.success(request, "Informações atualizadas com sucesso!", extra_tags="alert-success")
+    return render(request, "customers/update_customer.html", {"form": CustomersForm(), "customer": customer})
