@@ -1,6 +1,7 @@
 {%extends "administration/base_admin.html" %}
 {% load widget_tweaks %}
 {% block content %}
+
 <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid">
@@ -8,17 +9,22 @@
                           {% for message in messages %}
                           <div class="alert {{message.tags}}">{{message}}</div>
                           {%endfor%}
-                            <form method="POST" action=".">{% csrf_token %}
+                            <form method="POST" enctype="multipart/form-data" action=".">{% csrf_token %}
                               <div class="form-row">
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-4">
                                   <label for="{{form.name.id_for_label}}">{{form.name.label}}</label>
                                   {{form.name.errors}}
                                     {{form.name|add_class:"form-control"}}
                                 </div>
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-4">
                                   <label for="{{form.last_name.id_for_label}}">{{form.last_name.label}}</label>
                                   {{form.last_name.errors}}
                                     {{form.last_name|add_class:"form-control"}}
+                                </div>
+                                <div class="form-group col-md-4">
+                                  <label for="{{form.picture.id_for_label}}">{{form.picture.label}}</label>
+                                  {{form.picture.errors}}
+                                  {{form.picture|add_class:"form-control-file"}}
                                 </div>
                               </div>
                               <div class="form-row">
@@ -47,7 +53,7 @@
                                 <div class="form-group col-md-6">
                                   <label for="{{form.phone.id_for_label}}">{{form.phone.label}}</label>
                                   {{form.phone.errors}}
-                                    {{form.phone|add_class:"form-control"}}
+                                    {{form.phone|attr:"onkeypress:mascara(this)"|add_class:"form-control"}}
                                 </div>
                               </div>
                               <div class="form-row">
@@ -67,7 +73,6 @@
                                     {{form.district|add_class:"form-control"}}
                                 </div>
                               </div>
-
                               <button type="submit" class="btn btn-primary">Cadastrar</button>
                             </form>
                         </div>

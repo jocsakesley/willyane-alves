@@ -1,9 +1,10 @@
 from django import forms
-import datetime
+from django.forms.widgets import ClearableFileInput
+
 class CustomersForm(forms.Form):
     SEX = [("Masculino", "Masculino"), ("Feminino", "Feminino")]
     CITIES = [("Natal", "Natal"), ("Parnamirim", "Parnamirim"), ("São Gonçalo do Amarante", "São Gonçalo do Amarante"), ("Extremoz", "Extremoz"), ("Ceará-Mirim", "Ceará-Mirim"),
-              ("São josé de Mipibu", "São José de Mipibu"), ("Outra", "Outra")]
+              ("São José de Mipibu", "São José de Mipibu"), ("Outra", "Outra")]
     name = forms.CharField(label="Nome")
     last_name = forms.CharField(label="Sobrenome")
     cpf = forms.CharField(label="CPF", required=False)
@@ -14,3 +15,4 @@ class CustomersForm(forms.Form):
     city = forms.CharField(label="Cidade", widget=forms.Select(choices=CITIES))
     district =forms.CharField(label="Bairro", required=False)
     birth = forms.DateField(label="Data de nascimento", required=False)
+    picture = forms.ImageField(label="Foto", required=False, widget=ClearableFileInput)

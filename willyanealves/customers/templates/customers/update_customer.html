@@ -4,13 +4,27 @@
 <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid">
-                        <div class="container" style="padding-top:80px">
+                        <div class="container" style="padding-top:20px">
                           {% for message in messages %}
                           <div class="alert {{message.tags}}">{{message}}</div>
                           {%endfor%}
-                            <form method="POST" action=".">{% csrf_token %}
+                            <form method="POST" enctype="multipart/form-data" action=".">{% csrf_token %}
                               <div class="form-row">
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-2">
+                                  {%if customer.picture %}
+                                  <img src="{{customer.picture.url}}" name="picture" class="img-thumbnail" style="width:150px; height:auto">
+                                  {%else%}
+                                  <img src="{{DEFAULT_IMAGE}}" name="picture" class="img-thumbnail" style="width:150px; height:auto">
+                                  {{DEFAULT_IMAGE}}
+                                  {% endif %}
+                                </div>
+                                <div class="form-group col-md-2">
+                                  {{form.picture|add_class:"form-control-file"}}
+                                </div>
+
+                              </div>
+                              <div class="form-row" >
+                                <div class="form-group col-md-6" >
                                   <label for="{{form.name.id_for_label}}">{{form.name.label}}</label>
                                   <input type="text" class="form-control" value="{{customer.name}}" name="name">
                                 </div>
@@ -18,6 +32,7 @@
                                   <label for="{{form.last_name.id_for_label}}">{{form.last_name.label}}</label>
                                   <input type="text" class="form-control" value="{{customer.last_name}}" name="last_name">
                                 </div>
+
                               </div>
                               <div class="form-row">
                                 <div class="form-group col-md-4">
@@ -53,7 +68,16 @@
                                 </div>
                                 <div class="form-group col-md-3">
                                   <label for="{{form.city.id_for_label}}">{{form.city.label}}</label>
-                                  <input type="text" class="form-control" value="{{customer.city}}" name="city">
+                                  <select class="form-control" name="city">
+                                    <option value="{{customer.city}}">{{customer.city}}</option>
+                                    <option value="Natal">Natal</option>
+                                    <option value="Parnamirim">Parnamirim</option>
+                                    <option value="São Gonçalo do Amarante">São Gonçalo do Amarante</option>
+                                    <option value="Extremoz">Extremoz</option>
+                                    <option value="Ceará-Mirim">Ceará-Mirim</option>
+                                    <option value="São José de Mipibu">São José de Mipibu</option>
+                                    <option value="Outra">Outra</option>
+                                  </select>
                                 </div>
                                 <div class="form-group col-md-3">
                                   <label for="{{form.district.id_for_label}}">{{form.district.label}}</label>

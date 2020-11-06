@@ -3,42 +3,55 @@
 <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid">
-                        <div class="container" style="padding-top:30px">
+                        <div class="container">
                              <h1 class="mt-5">{{customer_detail.name}} {{customer_detail.last_name}}</h1>
-                                    <dl>
-                                      <dt>ID</dt>
-                                      <dd>{{customer_detail.id}}</dd>
+                                <div class="row" >
+                                    <div class="col-sm-2" >
+                                        {%if customer_detail.picture %}
+                                        <p>
+                                            <img src="{{customer_detail.picture.url}}" class="img-thumbnail" style="width:150px; height:auto">
+                                        </p>
+                                        {%endif%}
+                                    </div>
+                                    <div class="col-sm-3" >
+                                          <dt>ID</dt>
+                                          <dd>{{customer_detail.id}}</dd>
 
-                                      <dt>Telefone</dt>
-                                      <dd>{{customer_detail.phone}}</dd>
+                                          <dt>Telefone</dt>
+                                          <dd>{{customer_detail.phone}}</dd>
 
-                                      <dt>E-mail</dt>
-                                      <dd>{{customer_detail.email}}</dd>
+                                          <dt>E-mail</dt>
+                                          <dd>{{customer_detail.email}}</dd>
+                                    </div>
+                                    <div class="col-sm-3">
+                                          <dt>Data de nascimento</dt>
+                                          <dd>{{customer_detail.birth|date:'d/m/Y'}}</dd>
 
-                                      <dt>Data de nascimento</dt>
-                                      <dd>{{customer_detail.birth|date:'d/m/Y'}}</dd>
+                                          <dt>Sexo</dt>
+                                          <dd>{{customer_detail.sex}}</dd>
 
-                                      <dt>Sexo</dt>
-                                      <dd>{{customer_detail.sex}}</dd>
+                                          <dt>CPF</dt>
+                                          <dd>{{customer_detail.cpf}}</dd>
+                                    </div>
+                                        <div class="col-sm-3">
+                                          <dt>Endereço</dt>
+                                          <dd>
+                                           {{customer_detail.address}}
+                                          </dd>
 
-                                      <dt>CPF</dt>
-                                      <dd>{{customer_detail.cpf}}</dd>
+                                          <dt>Cidade</dt>
+                                          <dd>
+                                           {{customer_detail.city}}
+                                          </dd>
 
-                                      <dt>Endereço</dt>
-                                      <dd>
-                                       {{customer_detail.address}}
-                                      </dd>
+                                          <dt>Bairro</dt>
+                                          <dd>
+                                           {{customer_detail.district}}
+                                          </dd>
+                                    </div>
+                                        </dl>
+                                    </div>
 
-                                      <dt>Cidade</dt>
-                                      <dd>
-                                       {{customer_detail.city}}
-                                      </dd>
-
-                                      <dt>Bairro</dt>
-                                      <dd>
-                                       {{customer_detail.district}}
-                                      </dd>
-                                    </dl>
                                     <a class="btn btn-danger" href="{%url 'delete_customer' pk=customer_detail.pk%}" role="button">Excluir</a>
                                     <a class="btn btn-primary" href="{%url 'update_customer' pk=customer_detail.pk%}" role="button">Atualizar</a>
 
