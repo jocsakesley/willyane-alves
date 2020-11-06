@@ -2,7 +2,7 @@ from django import forms
 from django.forms.widgets import ClearableFileInput
 
 class CustomersForm(forms.Form):
-    SEX = [("Masculino", "Masculino"), ("Feminino", "Feminino")]
+    SEX = [("Feminino", "Feminino"), ("Masculino", "Masculino")]
     CITIES = [("Natal", "Natal"), ("Parnamirim", "Parnamirim"), ("São Gonçalo do Amarante", "São Gonçalo do Amarante"), ("Extremoz", "Extremoz"), ("Ceará-Mirim", "Ceará-Mirim"),
               ("São José de Mipibu", "São José de Mipibu"), ("Outra", "Outra")]
     name = forms.CharField(label="Nome")

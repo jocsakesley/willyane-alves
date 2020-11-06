@@ -46,8 +46,9 @@
                                 <div class="form-group col-md-4">
                                   <label for="{{form.sex.id_for_label}}">{{form.sex.label}}</label>
                                   <select class="form-control" name="sex">
-                                    <option value="{{customer.sex}}">{%if customer.sex == "Feminino" %}Feminino{%else%}Masculino{%endif%}</option>
-                                    <option value="{%if customer.sex == 'Feminino'%}Masculino{%else%}Feminino{%endif%}">{%if customer.sex == "Masculino" %}Feminino{%else%}Masculino{%endif%}</option>
+                                    <option value="{{customer.sex}}">{{customer.sex}}</option>
+                                    <option value="Feminino">Feminino</option>
+                                    <option value="Masculino">Masculino</option>
                                   </select>
                                 </div>
                               </div>
