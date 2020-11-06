@@ -76,9 +76,9 @@ def update(request,pk):
     if not form.is_valid():
         return render(request, "customers/update_customer.html", {"form": form, "customer": customer})
 
-    if Customer.objects.filter(cpf=form.cleaned_data['cpf']) and form.cleaned_data['cpf'] != '':
+    if Customer.objects.filter(cpf=form.cleaned_data['cpf']) and form.cleaned_data['cpf'] != '' and form.cleaned_data['id'] != pk:
         messages.info(request, "CPF já cadastrado", extra_tags="alert-warning")
-        return render(request, 'customers/register_customer.html', {'form': form})
+        return render(request, 'customers/update_customer.html', {'form': form})
 
     customer.name = form.cleaned_data['name']
     customer.last_name = form.cleaned_data['last_name']
