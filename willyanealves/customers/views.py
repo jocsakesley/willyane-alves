@@ -27,7 +27,8 @@ def create(request):
         Customer.objects.create(**form.cleaned_data)
         messages.success(request, "Cliente cadastrado com sucesso!", extra_tags="alert-success")
     except Exception as e:
-            messages.error(request, "Ocorreu um erro!", extra_tags="alert-danger")
+
+            messages.error(request, f"Ocorreu um erro! {e}", extra_tags="alert-danger")
     return render(request, 'customers/register_customer.html', {'form': form})
 
 @login_required(login_url='/accounts/')
