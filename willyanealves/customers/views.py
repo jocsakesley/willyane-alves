@@ -33,7 +33,7 @@ def create(request):
 
 @login_required(login_url='/accounts/')
 def list_customers(request):
-    customers = Customer.objects.all().order_by("-id")
+    customers = Customer.objects.all().order_by("-created_at")
     return render(request, "customers/list_customers.html", {"customers": customers})
 
 @login_required(login_url='/accounts/')
@@ -51,7 +51,7 @@ def search_customer(request):
     if word:
         customers = Customer.objects.annotate(full_name=fields).filter(Q(full_name__icontains=word) | Q(cpf__icontains=word))
     else:
-        customers = Customer.objects.all().order_by('-id')
+        customers = Customer.objects.all().order_by('-created_at')
     return render(request, "customers/search.html", {"customers": customers})
 
 @login_required(login_url='/accounts/')
