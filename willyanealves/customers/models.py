@@ -1,5 +1,5 @@
 from django.db import models
-
+import uuid
 DEFAULT_IMAGE = 'images/default.png'
 class Customer(models.Model):
     name = models.CharField("Nome", max_length=255)

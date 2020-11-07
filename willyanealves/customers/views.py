@@ -90,7 +90,8 @@ def update(request,pk):
     customer.address = form.cleaned_data['address']
     customer.city = form.cleaned_data['city']
     customer.district = form.cleaned_data['district']
-    if not customer.picture:
+    print(customer.picture)
+    if customer.picture == '':
         customer.picture = form.cleaned_data['picture']
     customer.save()
     messages.success(request, "Informações atualizadas com sucesso!", extra_tags="alert-success")
