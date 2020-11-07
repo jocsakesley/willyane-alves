@@ -1,6 +1,6 @@
 from django.db import models
 import uuid
-DEFAULT_IMAGE = 'images/default.png'
+
 class Customer(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField("Nome", max_length=255)
