@@ -64,7 +64,7 @@ def delete_customer(request, pk):
 
 @login_required(login_url='/accounts/')
 def update_customer(request, pk):
-    customer = Customer.objects.get(id=pk)
+    customer = Customer.objects.get(pk=pk)
     if request.method == "POST":
         return update(request,pk)
     else:
@@ -91,8 +91,7 @@ def update(request,pk):
     customer.address = form.cleaned_data['address']
     customer.city = form.cleaned_data['city']
     customer.district = form.cleaned_data['district']
-    print(customer.picture)
-    if customer.picture == '':
+    if customer.picture == '' or form.cleaned_data['picture'] != None:
         customer.picture = form.cleaned_data['picture']
     customer.save()
     messages.success(request, "Informações atualizadas com sucesso!", extra_tags="alert-success")
