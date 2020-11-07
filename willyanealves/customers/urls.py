@@ -1,5 +1,4 @@
-
-from django.urls import path, include
+from django.urls import path
 from willyanealves.customers.views import register_customer, list_customers, detail_customers, search_customer, delete_customer, update_customer
 
 
