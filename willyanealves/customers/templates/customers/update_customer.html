@@ -1,9 +1,7 @@
 {%extends "administration/base_admin.html" %}
 {% load widget_tweaks %}
 {% block content %}
-<div id="layoutSidenav_content">
-                <main>
-                    <div class="container-fluid">
+
                         <div class="container" style="padding-top:20px">
                           {% for message in messages %}
                           <div class="alert {{message.tags}}">{{message}}</div>
@@ -89,6 +87,5 @@
                               <button type="submit" class="btn btn-primary">Atualizar</button>
                             </form>
                         </div>
-                    </div>
-                </main>
+
 {%endblock%}

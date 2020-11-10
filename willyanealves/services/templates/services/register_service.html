@@ -1,0 +1,38 @@
+{% extends "administration/base_admin.html"%}
+{% load widget_tweaks %}
+{% block content %}
+
+
+                        <div class="container" style="padding-top:20px">
+                          {% for message in messages %}
+                          <div class="alert {{message.tags}}">{{message}}</div>
+                          {%endfor%}
+                            <form method="POST" enctype="multipart/form-data" action=".">{% csrf_token %}
+                              <div class="form-row">
+                                <div class="form-group col-md-12">
+                                  <label for="{{form.service.id_for_label}}">{{form.service.label}}</label>
+                                  {{form.service.errors}}
+                                    {{form.service|add_class:"form-control"}}
+                                </div>
+
+                              </div>
+                              <div class="form-row">
+                                <div class="form-group col-md-4">
+                                  <label for="{{form.price.id_for_label}}">{{form.price.label}}</label>
+                                  {{form.price.errors}}
+                                    {{form.price|add_class:"form-control"}}
+                                </div>
+                                <div class="form-group col-md-4">
+                                  <label for="{{form.duration.id_for_label}}">{{form.duration.label}}</label>
+                                  {{form.duration.errors}}
+                                    {{form.duration|attr:"type:time"|add_class:"form-control"}}
+                                </div>
+                                <div class="form-group col-md-4">
+                                  <label for="{{form.cost.id_for_label}}">{{form.cost.label}}</label>
+                                  {{form.cost.errors}}
+                                    {{form.cost|add_class:"form-control"}}
+                                </div>
+                              <button type="submit" class="btn btn-primary">Cadastrar</button>
+                            </form>
+                        </div>
+{%endblock%}

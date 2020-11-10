@@ -25,4 +25,5 @@ urlpatterns = [
     path('accounts/', include('willyanealves.accounts.urls')),
     path('dashboad/', include('willyanealves.administration.urls')),
     path('customers/', include('willyanealves.customers.urls')),
+    path('services/', include('willyanealves.services.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,43 @@
+{% extends "administration/base_admin.html"%}
+{% load widget_tweaks %}
+{% block content %}
+
+<div class="container-fluid">
+      <div class="container" style="padding-top:20px">
+            <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table mr-1"></i>
+                                Serviços Cadastrados
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                          <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Serviço</th>
+                                            <th scope="col">Valor</th>
+                                            <th scope="col">Duração</th>
+                                            <th scope="col">Custo</th>
+                                            <th scope="col">Lucro</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for service in services %}
+                                          <tr>
+                                            <td>{{service.id}}</td>
+                                            <td><a href="#">{{service.service}}</a></td>
+                                            <td>{{service.price}}</td>
+                                            <td>{{service.duration}}</td>
+                                            <td>{{service.cost}}</td>
+                                            <td>{{service.profit}}</td>
+                                          </tr>
+                                          {% endfor %}
+                                          </tbody>
+                                    </table>
+                                </div>
+                            </div>
+            </div>
+      </div>
+</div>
+{%endblock%}
