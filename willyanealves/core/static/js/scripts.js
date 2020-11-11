@@ -20,3 +20,15 @@
         $("body").toggleClass("sb-sidenav-toggled");
     });
 })(jQuery);
+
+function mascara(phone){
+            if(phone.value.length == 0)
+                phone.value = '(' + phone.value; //quando começamos a digitar, o script irá inserir um parênteses no começo do campo.
+            if(phone.value.length == 3)
+                phone.value = phone.value + ') '; //quando o campo já tiver 3 caracteres (um parênteses e 2 números) o script irá inserir mais um parênteses, fechando assim o código de área.
+
+            if(phone.value.length == 10)
+                phone.value = phone.value + '-'; //quando o campo já tiver 8 caracteres, o script irá inserir um tracinho, para melhor visualização do telefone.
+            else
+                phone.value = phone.value;
+}

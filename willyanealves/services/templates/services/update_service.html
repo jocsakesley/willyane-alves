@@ -1,16 +1,10 @@
 {% extends "administration/base_admin.html"%}
 {% load widget_tweaks %}
+{% load filter_strings %}
 {% block content %}
 
-<div class="container-fluid">
-      <div class="container" style="padding-top:20px">
-            <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table mr-1"></i>
-                                Cadastrar Serviço
-                            </div>
-                            <div class="card-body">
 
+                        <div class="container" style="padding-top:20px">
                           {% for message in messages %}
                           <div class="alert {{message.tags}}">{{message}}</div>
                           {%endfor%}
@@ -19,7 +13,7 @@
                                 <div class="form-group col-md-12">
                                   <label for="{{form.service.id_for_label}}">{{form.service.label}}</label>
                                   {{form.service.errors}}
-                                    {{form.service|add_class:"form-control"}}
+                                  <input type="text" name="service" class="form-control" value="{{service.service}}">
                                 </div>
 
                               </div>
@@ -27,22 +21,27 @@
                                 <div class="form-group col-md-4">
                                   <label for="{{form.price.id_for_label}}">{{form.price.label}}</label>
                                   {{form.price.errors}}
-                                    {{form.price|add_class:"form-control"}}
+                                  <input type="number" step=".01" name="price" class="form-control" value="{{service.price|replace_comma:','}}">
                                 </div>
                                 <div class="form-group col-md-4">
                                   <label for="{{form.duration.id_for_label}}">{{form.duration.label}}</label>
                                   {{form.duration.errors}}
-                                    {{form.duration|attr:"type:time"|add_class:"form-control"}}
+                                  <select name="duration" class="form-control">
+                                    <option value="{{service.duration}}">{{service.duration}}</option>
+                                    <option value="00:30:00">00:30</option>
+                                    <option value="01:00:00">01:00</option>
+                                    <option value="01:30:00">01:30</option>
+                                    <option value="02:00:00">02:00</option>
+                                    <option value="02:30:00">02:30</option>
+                                    <option value="03:00:00">03:00</option>
+                                  </select>
                                 </div>
                                 <div class="form-group col-md-4">
                                   <label for="{{form.cost.id_for_label}}">{{form.cost.label}}</label>
                                   {{form.cost.errors}}
-                                    {{form.cost|add_class:"form-control"}}
+                                  <input type="number" step=".01" name="cost" id="cost" class="form-control" value="{{service.cost|replace_comma:','}}">
                                 </div>
-                              <button type="submit" class="btn btn-primary">Cadastrar</button>
+                              <button type="submit" class="btn btn-primary">Atualizar</button>
                             </form>
-                          </div>
-            </div>
-      </div>
-</div>
+                        </div>
 {%endblock%}

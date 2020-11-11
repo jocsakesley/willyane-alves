@@ -1,8 +1,15 @@
 {%extends "administration/base_admin.html" %}
 {% load widget_tweaks %}
 {% block content %}
+<div class="container-fluid">
+      <div class="container" style="padding-top:20px">
+            <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table mr-1"></i>
+                                Cadastro de cliente
+                            </div>
+                            <div class="card-body">
 
-                        <div class="container" style="padding-top:20px">
                           {% for message in messages %}
                           <div class="alert {{message.tags}}">{{message}}</div>
                           {%endfor%}
@@ -52,7 +59,7 @@
                                 <div class="form-group col-md-6">
                                   <label for="{{form.phone.id_for_label}}">{{form.phone.label}}</label>
                                   {{form.phone.errors}}
-                                    {{form.phone|attr:"onkeypress:mascara(this)"|add_class:"form-control"}}
+                                    {{form.phone|attr:"id:phone"|attr:"onkeypress:mascara(this)"|add_class:"form-control"}}
                                 </div>
                               </div>
                               <div class="form-row">
@@ -75,5 +82,7 @@
                               <button type="submit" class="btn btn-primary">Cadastrar</button>
                             </form>
                         </div>
-
+            </div>
+      </div>
+</div>
 {%endblock%}

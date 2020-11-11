@@ -1,0 +1,31 @@
+{% extends "administration/base_admin.html"%}
+{% load widget_tweaks %}
+{% block content %}
+                        <div class="container">
+                             <h1 class="mt-5">{{service.service}}</h1>
+                                <div class="row" >
+                                    <div class="col-sm-3" >
+                                          <dt>ID</dt>
+                                          <dd>{{service.id}}</dd>
+
+                                          <dt>Valor</dt>
+                                          <dd>{{service.price}}</dd>
+
+                                          <dt>Duração</dt>
+                                          <dd>{{service.duration}}</dd>
+                                    </div>
+                                    <div class="col-sm-3">
+                                          <dt>Custo</dt>
+                                          <dd>{{service.cost}}</dd>
+
+                                          <dt>Lucro</dt>
+                                          <dd>{{service.profit}}</dd>
+
+                                    </div>
+                                </div>
+
+                                    <a class="btn btn-danger" href="{%url 'delete_service' pk=service.pk%}" role="button">Excluir</a>
+                                    <a class="btn btn-primary" href="{%url 'update_service' pk=service.pk%}" role="button">Atualizar</a>
+
+                        </div>
+{%endblock%}

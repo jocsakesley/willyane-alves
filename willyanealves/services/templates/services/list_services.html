@@ -26,7 +26,7 @@
                                         {% for service in services %}
                                           <tr>
                                             <td>{{service.id}}</td>
-                                            <td><a href="#">{{service.service}}</a></td>
+                                            <td><a href="{%url 'detail_service' pk=service.pk%}">{{service.service}}</a></td>
                                             <td>{{service.price}}</td>
                                             <td>{{service.duration}}</td>
                                             <td>{{service.cost}}</td>

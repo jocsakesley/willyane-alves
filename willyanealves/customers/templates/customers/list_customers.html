@@ -13,7 +13,7 @@
             <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table mr-1"></i>
-                                Serviços Cadastrados
+                                Clientes Cadastrados
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -32,8 +32,8 @@
                               <tbody>
                               {% for customer in customers %}
                                 <tr>
-                                  <td>{{customer.id}}</td>
-                                  <td><a href="{%url 'detail_customers' pk=customer.pk%}">{{customer.name}}</a></td>
+                                  <td>{{customer.new_id}}</td>
+                                  <td><a href="{%url 'detail_customers' new_id=customer.new_id%}">{{customer.name}}</a></td>
                                   <td>{{customer.last_name}}</td>
                                   <td>{{customer.email}}</td>
                                   <td>{{customer.phone}}</td>
