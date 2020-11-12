@@ -32,8 +32,8 @@
                               <tbody>
                               {% for customer in customers %}
                                 <tr>
-                                  <td>{{customer.new_id}}</td>
-                                  <td><a href="{%url 'detail_customers' new_id=customer.new_id%}">{{customer.name}}</a></td>
+                                  <td>{{customer.pk}}</td>
+                                  <td><a href="{%url 'detail_customers' pk=customer.pk%}">{{customer.name}}</a></td>
                                   <td>{{customer.last_name}}</td>
                                   <td>{{customer.email}}</td>
                                   <td>{{customer.phone}}</td>

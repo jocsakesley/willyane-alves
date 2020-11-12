@@ -1,9 +1,9 @@
 from django.db import models
-import uuid
+#import uuid
 
 
 class Customer(models.Model):
-    new_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    #pk = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField("Nome", max_length=255)
     last_name = models.CharField("Sobrenome", max_length=255)
     cpf = models.CharField("CPF", max_length=14, blank=True, null=True)

@@ -37,9 +37,9 @@ def list_customers(request):
     return render(request, "customers/list_customers.html", {"customers": customers})
 
 @login_required(login_url='/accounts/')
-def detail_customers(request, new_id):
+def detail_customers(request, pk):
     try:
-        customer_detail = Customer.objects.get(new_id=new_id)
+        customer_detail = Customer.objects.get(pk=pk)
     except Customer.DoesNotExist:
         raise Http404
     return render(request, "customers/detail_customers.html", {'customer_detail': customer_detail})
@@ -55,29 +55,29 @@ def search_customer(request):
     return render(request, "customers/search.html", {"customers": customers})
 
 @login_required(login_url='/accounts/')
-def delete_customer(request, new_id):
+def delete_customer(request, pk):
     try:
-        Customer.objects.get(new_id=new_id).delete()
+        Customer.objects.get(pk=pk).delete()
     except Customer.DoesNotExist:
         messages.info(request, "Cliente não encontrado")
     return redirect('list_customers')
 
 @login_required(login_url='/accounts/')
-def update_customer(request, new_id):
-    customer = Customer.objects.get(new_id=new_id)
+def update_customer(request, pk):
+    customer = Customer.objects.get(pk=pk)
     if request.method == "POST":
-        return update(request, new_id)
+        return update(request, pk)
     else:
         return render(request, "customers/update_customer.html", {"form": CustomersForm(), "customer": customer})
 
-def update(request,new_id):
+def update(request,pk):
     form = CustomersForm(request.POST, request.FILES)
-    customer = Customer.objects.get(new_id=new_id)
+    customer = Customer.objects.get(pk=pk)
 
     if not form.is_valid():
         return render(request, "customers/update_customer.html", {"form": form, "customer": customer})
 
-    if Customer.objects.filter(cpf=form.cleaned_data['cpf']) and form.cleaned_data['cpf'] != '' and not Customer.objects.filter(new_id=new_id):
+    if Customer.objects.filter(cpf=form.cleaned_data['cpf']) and form.cleaned_data['cpf'] != '' and not Customer.objects.filter(pk=pk):
         messages.info(request, "CPF já cadastrado", extra_tags="alert-warning")
         return render(request, 'customers/update_customer.html', {'form': form})
 
