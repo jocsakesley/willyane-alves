@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'willyanealves.administration',
     'willyanealves.customers',
     'willyanealves.services',
+    'willyanealves.customer_service',
 ]
 
 MIDDLEWARE = [

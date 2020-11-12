@@ -26,4 +26,5 @@ urlpatterns = [
     path('dashboad/', include('willyanealves.administration.urls')),
     path('customers/', include('willyanealves.customers.urls')),
     path('services/', include('willyanealves.services.urls')),
+    path('customer_service/', include('willyanealves.customer_service.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
