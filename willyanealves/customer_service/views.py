@@ -12,7 +12,7 @@ def create_customer_service(request):
     form = CustomerServiceForm()
     users = User.objects.all()
     customers = Customer.objects.all()
-    form_serviceitem_factory = inlineformset_factory(CustomerService, ServiceItem, form=ServiceItemForm, extra=3)
+    form_serviceitem_factory = inlineformset_factory(CustomerService, ServiceItem, form=ServiceItemForm, extra=1)
     form_serviceitem = form_serviceitem_factory()
     context = {
         'form': form,
