@@ -1,4 +1,5 @@
 from django.db import models
+from willyanealves.customers.models import Customer
 
 # Create your models here.
 class Service(models.Model):

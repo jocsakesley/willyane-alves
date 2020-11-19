@@ -19,4 +19,4 @@ class Customer(models.Model):
     picture = models.ImageField("Foto", blank=True, upload_to='pictures/%Y/%m/', default='default.png', null=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.name} {self.last_name}"

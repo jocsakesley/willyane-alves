@@ -9,6 +9,84 @@
                                 Atendimento
                             </div>
                             <div class="card-body">
+                                {% for message in messages %}
+                                    <div class="alert {{message.tags}}">{{message}}</div>
+                                {%endfor%}
+                                <form method="POST" enctype="multipart/form-data" action=".">{% csrf_token %}
+                                  <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                      <label for="{{form.user.id_for_label}}">{{form.user.label}}</label>
+                                        {{form.user|add_class:"form-control"}}
+                                        <!--<select name="user" class="form-control">
+                                            {{form.user.errors}}
+                                            {% for u in users %}
+                                            <option value="{{u}}">{{u}}</option>
+                                            {%endfor%}
+                                        </select>-->
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                      <label for="{{form.customer.id_for_label}}">{{form.customer.label}}</label>
+                                       {{form.customer|add_class:"form-control"}}
+                                        <!-- <select name="customer" class="form-control">
+                                            {{form.customer.errors}}
+                                            {% for c in customers %}
+                                            <option value="{{c}}">{{c.name}} {{c.last_name}}</option>
+                                            {%endfor%}
+                                        </select>-->
+                                    </div>
+                                  </div>
+                                  <div class="form-row">
+                                    <div class="form-group col-md-3">
+                                      <label for="{{form.date.id_for_label}}">{{form.date.label}}</label>
+                                        {{form.date.errors}}
+                                        {{form.date|add_class:"form-control"|attr:"type:date"}}
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                      <label for="{{form.start.id_for_label}}">{{form.start.label}}</label>
+                                        {{form.start.errors}}
+                                        {{form.start|add_class:"form-control"|attr:"type:time"}}
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                      <label for="finish">Hora de término</label>
+
+                                        <input class="form-control" name=finish type="time" readonly>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                      <label for="{{form.discount.id_for_label}}">{{form.discount.label}}</label>
+                                        {{form.discount.errors}}
+                                        {{form.discount|add_class:"form-control"}}
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                      <label for="{{form.payment.id_for_label}}">{{form.payment.label}}</label>
+                                        {{form.payment.errors}}
+                                        {{form.payment|add_class:"form-control"}}
+                                    </div>
+                                  </div>
+
+                                  <div class="form-row">
+
+                                      <div class="form-group col-md-12">
+                                        <table>
+                                            <thead>
+                                                <td>Serviço</td>
+                                                <td>Quantidade</td>
+                                                <td>Deletar</td>
+                                            </thead>
+                                            {{form_serviceitem.management_form}}
+                                            {%for fsi in form_serviceitem %}
+                                            <tbody>
+                                                <td class="form-group col-md-5">{{fsi.service|add_class:"form-control"}}</td>
+                                                <td class="form-group col-md-4">{{fsi.quantity|add_class:"form-control"}}</td>
+                                                <td class="form-group col-md-3">{{fsi.DELETE|add_class:"form-control"}}</td>
+                                            </tbody>
+                                            {%endfor%}
+                                        </table>
+                                    </div>
+
+                                  </div>
+
+                                  <button type="submit" class="btn btn-primary">Cadastrar</button>
+                                </form>
                             </div>
             </div>
       </div>
