@@ -16,23 +16,23 @@
                                       <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label for="{{form.user.id_for_label}}">{{form.user.label}}</label>
-                                                {{form.user|add_class:"form-control"}}
+                                                <input type="text" class="form-control" value="{{customerservice.user}}" name="user">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="{{form.customer.id_for_label}}">{{form.customer.label}}</label>
-                                               {{form.customer|add_class:"form-control"}}
+                                               <input type="text" class="form-control" value="{{customerservice.customer}}" name="customer">
                                             </div>
                                       </div>
                                       <div class="form-row">
-                                            <div class="form-group col-md-2">
+                                            <div class="form-group col-md-3">
                                                 <label for="{{form.date.id_for_label}}">{{form.date.label}}</label>
                                                 {{form.date.errors}}
-                                                {{form.date|add_class:"form-control"|attr:"type:date"}}
+                                                <input type="date" class="form-control" value="{{customerservice.date|date:'Y-m-d'}}" name="date">
                                             </div>
                                             <div class="form-group col-md-2">
                                                  <label for="{{form.start.id_for_label}}">{{form.start.label}}</label>
                                                 {{form.start.errors}}
-                                                {{form.start|add_class:"form-control"|attr:"type:time"}}
+                                                <input type="time" class="form-control" value="{{customerservice.start|time:'H:i'}}" name="time">
                                             </div>
                                             <div class="form-group col-md-2">
                                                 <label for="finish">Hora de término</label>
@@ -42,16 +42,19 @@
                                             <div class="form-group col-md-2">
                                                 <label for="{{form.discount.id_for_label}}">{{form.discount.label}}</label>
                                                 {{form.discount.errors}}
-                                                {{form.discount|add_class:"form-control"}}
+                                                <select class="form-control" name="discount">
+                                                    <option value="{{customerservice.discount}}">{{customerservice.discount}}%</option>
+                                                    <option value="0">0%</option>
+                                                    <option value="5">5%</option>
+                                                    <option value="10">10%</option>
+                                                    <option value="15">15%</option>
+                                                    <option value="20">20%</option>
+                                                  </select>
                                             </div>
-                                            <div class="form-group col-md-2">
+                                            <div class="form-group col-md-3">
                                                 <label for="{{form.payment.id_for_label}}">{{form.payment.label}}</label>
                                                 {{form.payment.errors}}
                                                 {{form.payment|add_class:"form-control"}}
-                                            </div>
-                                            <div class="form-group col-md-2">
-                                                <label for="total">Total</label>
-                                                <input class="form-control" name=total type="text" readonly>
                                             </div>
                                       </div>
 
@@ -63,8 +66,8 @@
                                                     <p>Quantidade</p>
                                           </div>
                                       </div>
-                                            {{form_serviceitem.management_form}}
                                       <div class="form-row inlineform">
+                                                {{form_serviceitem.management_form}}
                                                 {%for fsi in form_serviceitem %}
                                           <div class="form-group col-md-8">
                                                     {{fsi.service|add_class:"form-control"}}
