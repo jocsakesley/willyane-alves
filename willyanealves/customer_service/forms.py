@@ -34,3 +34,4 @@ class ServiceItemForm(forms.ModelForm):
         model = ServiceItem
         fields = '__all__'
 
+

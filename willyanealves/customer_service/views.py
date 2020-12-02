@@ -43,7 +43,7 @@ def create(request):
 def update_customer_service(request, pk):
     customerservice = CustomerService.objects.get(pk=pk)
     form = CustomerServiceForm(instance=customerservice)
-    form_serviceitem_factory = inlineformset_factory(CustomerService, ServiceItem, form=ServiceItemForm)
+    form_serviceitem_factory = inlineformset_factory(CustomerService, ServiceItem, form=ServiceItemForm, extra=1)
     form_serviceitem = form_serviceitem_factory(instance=customerservice)
     context = {
         'form': form,
@@ -52,15 +52,16 @@ def update_customer_service(request, pk):
     }
     if customerservice is None:
         return render(request, "customer_service/update_customer_service.html", context)
-    return render(request, "customer_service/update_customer_service.html", context)
+
     if request.method == "POST":
         form = CustomerServiceForm(request.POST)
         form_serviceitem_factory = inlineformset_factory(CustomerService, ServiceItem, form=ServiceItemForm)
-        form_serviceitem = form_serviceitem_factory(request.POST, prefix='serviceitem')
+        form_serviceitem = form_serviceitem_factory(request.POST)
 
         if form.is_valid() and form_serviceitem.is_valid():
             client = form.save()
             form_serviceitem.instance = client
             form_serviceitem.save()
-
-    pass
+            messages.success(request, "Atendimento registrado com sucesso", extra_tags="alert-success")
+            return render(request, "customer_service/update_customer_service.html", context)
+    return render(request, "customer_service/update_customer_service.html", context)

@@ -28,7 +28,7 @@ class CustomerServiceAdmin(admin.ModelAdmin):
 
         return total
     total.short_description = 'total'
-
+'''
     def finish(self, obj):
         entries = models.ServiceItem.objects.filter(customerservice=models.CustomerService.objects.get(id=obj.id))
         duration = timedelta()
@@ -40,6 +40,6 @@ class CustomerServiceAdmin(admin.ModelAdmin):
         return finish.time()
 
     finish.short_description = 'hora de término'
-
+'''
 admin.site.register(models.CustomerService, CustomerServiceAdmin)
 admin.site.register(models.ServiceItem, ServiceItemAdmin)

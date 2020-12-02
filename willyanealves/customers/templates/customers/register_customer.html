@@ -42,7 +42,7 @@
                                 <div class="form-group col-md-4">
                                   <label for="{{form.cpf.id_for_label}}">{{form.cpf.label}}</label>
                                   {{form.cpf.errors}}
-                                    {{form.cpf|add_class:"form-control"}}
+                                    {{form.cpf|attr:"onkeypress:mascaraCpf(this)"|add_class:"form-control"}}
                                 </div>
                                 <div class="form-group col-md-4">
                                   <label for="{{form.sex.id_for_label}}">{{form.sex.label}}</label>
@@ -85,4 +85,30 @@
             </div>
       </div>
 </div>
+{%endblock%}
+{%block script%}
+<script type="text/javascript">
+function mascara(phone){
+            if(phone.value.length == 0)
+                phone.value = '(' + phone.value; //quando começamos a digitar, o script irá inserir um parênteses no começo do campo.
+            if(phone.value.length == 3)
+                phone.value = phone.value + ') '; //quando o campo já tiver 3 caracteres (um parênteses e 2 números) o script irá inserir mais um parênteses, fechando assim o código de área.
+
+            if(phone.value.length == 10)
+                phone.value = phone.value + '-'; //quando o campo já tiver 8 caracteres, o script irá inserir um tracinho, para melhor visualização do telefone.
+            else
+                phone.value = phone.value;
+}
+
+function mascaraCpf(cpf){
+            if(cpf.value.length == 3)
+                cpf.value = cpf.value + '.';
+            if(cpf.value.length == 7)
+                cpf.value = cpf.value + '.';
+            if(cpf.value.length == 11)
+                cpf.value = cpf.value + '-';
+            else
+            cpf.value = cpf.value;
+}
+</script>
 {%endblock%}
