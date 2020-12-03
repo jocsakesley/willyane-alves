@@ -4,17 +4,8 @@ import pandas as pd
 from willyanealves.customer_service.models import CustomerService, ServiceItem
 
 
-def barchart_billing_profit(query):
-    date, total, profit = [], [], []
-    custormerservice = query#CustomerService.objects.prefetch_related('serviceitem')
-    for cs in custormerservice:
-        date.append(cs.date)
-        total.append(float(cs.total_service.strip("R$ ")))
-        total_profit = 0
-        for si in cs.serviceitem.select_related('service'):
-            total_profit += float(si.profit)
-        profit.append(total_profit)
-    df = pd.DataFrame({"date": date, "total": total, "profit": profit})
+def barchart_billing_profit(date_bp, total, profit):
+    df = pd.DataFrame({"date": date_bp, "total": total, "profit": profit})
     df = df.groupby('date')[['total','profit']].sum()
     df = pd.DataFrame(df)
     df = df.reset_index()
@@ -54,15 +45,8 @@ def barchart_billing_profit(query):
     'tableRotation', 'zoomInGeo', 'zoomOutGeo', 'resetGeo', 'hoverClosestGeo', 'toImage', 'sendDataToCloud',
     'hoverClosestGl2d', 'hoverClosestPie', 'toggleHover', 'resetViews', 'toggleSpikelines', 'resetViewMapbox'], 'displaylogo': False})
 
-def barchart_customer_service(query):
-    date, service, qtd = [], [], []
-    custormerservice = query#CustomerService.objects.prefetch_related('serviceitem')
-    for cs in custormerservice:
-        for si in cs.serviceitem.select_related('service'):
-            date.append(si.customerservice.date)
-            service.append(si.service.service)
-            qtd.append(si.quantity)
-    df = pd.DataFrame({'date': date, 'service': service, 'quantity': qtd})
+def barchart_customer_service(date_cs, service, qtd):
+    df = pd.DataFrame({'date': date_cs, 'service': service, 'quantity': qtd})
     df = df.groupby(['date','service'])['quantity'].sum()
     df = pd.DataFrame(df)
     df = df.reset_index()
