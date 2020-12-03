@@ -10,7 +10,7 @@ from .forms import DashForm
 @login_required(login_url='/accounts/')
 def dashboard(request):
     form = DashForm()
-    customer_service = CustomerService.objects.all()
+    customer_service = CustomerService.objects.prefetch_related('serviceitem')
     customer_service_month = []
     total_billing = 0
     total_profit = 0
@@ -21,14 +21,14 @@ def dashboard(request):
                 if cs.date.month == int(form.cleaned_data['month']) and cs.date.year == int(form.cleaned_data['year']):
                     total_billing += float(cs.total_service.strip("R$ "))
                     customer_service_month.append(cs)
-                    for si in cs.serviceitem.all():
+                    for si in cs.serviceitem.select_related('service'):
                         total_profit += float(si.profit)
     else:
         for cs in customer_service:
             if cs.date.month == datetime.today().month and cs.date.year == datetime.today().year:
                 total_billing += float(cs.total_service.strip("R$ "))
                 customer_service_month.append(cs)
-                for si in cs.serviceitem.all():
+                for si in cs.serviceitem.select_related('service'):
                     total_profit += float(si.profit)
 
 

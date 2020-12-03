@@ -5,12 +5,12 @@ from willyanealves.customer_service.models import CustomerService, ServiceItem
 
 def barchart_billing_profit():
     date, total, profit = [], [], []
-    custormerservice = CustomerService.objects.all()
+    custormerservice = CustomerService.objects.prefetch_related('serviceitem')
     for cs in custormerservice:
         date.append(cs.date)
         total.append(float(cs.total_service.strip("R$ ")))
         total_profit = 0
-        for si in cs.serviceitem.all():
+        for si in cs.serviceitem.select_related('service'):
             total_profit += float(si.profit)
         profit.append(total_profit)
     df = pd.DataFrame({"date": date, "total": total, "profit": profit})
@@ -39,10 +39,9 @@ def barchart_billing_profit():
 
 def barchart_customer_service():
     date, service, qtd = [], [], []
-    custormerservice = CustomerService.objects.all()
+    custormerservice = CustomerService.objects.prefetch_related('serviceitem')
     for cs in custormerservice:
-        for si in cs.serviceitem.all():
-
+        for si in cs.serviceitem.select_related('service'):
             date.append(si.customerservice.date)
             service.append(si.service.service)
             qtd.append(si.quantity)
