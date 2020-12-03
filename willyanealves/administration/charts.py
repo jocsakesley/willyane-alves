@@ -3,9 +3,10 @@ import plotly.express as px
 import pandas as pd
 from willyanealves.customer_service.models import CustomerService, ServiceItem
 
-def barchart_billing_profit():
+
+def barchart_billing_profit(query):
     date, total, profit = [], [], []
-    custormerservice = CustomerService.objects.prefetch_related('serviceitem')
+    custormerservice = query#CustomerService.objects.prefetch_related('serviceitem')
     for cs in custormerservice:
         date.append(cs.date)
         total.append(float(cs.total_service.strip("R$ ")))
@@ -53,9 +54,9 @@ def barchart_billing_profit():
     'tableRotation', 'zoomInGeo', 'zoomOutGeo', 'resetGeo', 'hoverClosestGeo', 'toImage', 'sendDataToCloud',
     'hoverClosestGl2d', 'hoverClosestPie', 'toggleHover', 'resetViews', 'toggleSpikelines', 'resetViewMapbox'], 'displaylogo': False})
 
-def barchart_customer_service():
+def barchart_customer_service(query):
     date, service, qtd = [], [], []
-    custormerservice = CustomerService.objects.prefetch_related('serviceitem')
+    custormerservice = query#CustomerService.objects.prefetch_related('serviceitem')
     for cs in custormerservice:
         for si in cs.serviceitem.select_related('service'):
             date.append(si.customerservice.date)

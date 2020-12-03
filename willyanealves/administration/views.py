@@ -35,8 +35,8 @@ def dashboard(request):
     context = {
         'customer_service_month': len(customer_service_month),
         'customer_service': customer_service,
-        'barchart': barchart_billing_profit(),
-        'barchartcs': barchart_customer_service(),
+        'barchart': barchart_billing_profit(customer_service),
+        'barchartcs': barchart_customer_service(customer_service),
         'total_billing': f"{total_billing:.2f}",
         'total_profit': f"{total_profit:.2f}",
         'form': form,
