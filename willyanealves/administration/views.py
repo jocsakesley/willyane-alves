@@ -32,7 +32,7 @@ def dashboard(request):
     else:
         date_bp = [dbp[0] for dbp in customer_service.filter(date__month=datetime.today().month, date__year=datetime.today().year).values_list('date')]
         total = [tb[0] for tb in customer_service.filter(date__month=datetime.today().month, date__year=datetime.today().year) \
-                     .annotate(total=Sum((F('serviceitem__service__price') * F('serviceitem__quantity')) * (1 - (F('serviceitem__customerservice__discount') / 100)), output_field=FloatField())) \
+                     .annotate(total=Sum((F('serviceitem__service__price') * F('serviceitem__quantity')) * (1 - (F('serviceitem__customerservice__discount') / 100)), output_field=FloatField()))\
                      .values_list('total')]
         total_billing = sum(total)
         customer_service_month = customer_service.filter(date__month=datetime.today().month, date__year=datetime.today().year).aggregate(Count('id'))['id__count']
