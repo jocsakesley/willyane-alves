@@ -8,26 +8,26 @@ class ServiceItemInline(admin.TabularInline):
     extra = 1
 
 class ServiceItemAdmin(admin.ModelAdmin):
-    list_display = ('customerservice', 'service', 'quantity', 'total')
+    list_display = ('customerservice', 'service', 'quantity',)# 'total')
 
 class CustomerServiceAdmin(admin.ModelAdmin):
     model = models.CustomerService
-    list_display = ('id','user', 'customer', 'date', 'start', 'finish', 'discount', 'total', 'total_service')
+    list_display = ('id','user', 'customer', 'date', 'start', 'discount', ) #'total_service')
     inlines = [
         ServiceItemInline
     ]
 
-    def total(self, obj):
-        entries = models.ServiceItem.objects.filter(customerservice=models.CustomerService.objects.get(id=obj.id))
-        total = 0
-        for entry in entries:
-            if models.CustomerService.objects.get(id=obj.id).discount != '':
-                total += (float(entry.price * entry.quantity) * (1 - (int(models.CustomerService.objects.get(id=obj.id).discount)/100))) * (1 + float(models.CustomerService.objects.get(id=obj.id).payment))
-            else:
-                total += float(entry.price * entry.quantity) * (1 + float(models.CustomerService.objects.get(id=obj.id).payment))
-
-        return total
-    total.short_description = 'total'
+    #def total(self, obj):
+    #    entries = models.ServiceItem.objects.filter(customerservice=models.CustomerService.objects.get(id=obj.id))
+    #    total = 0
+    #    for entry in entries:
+    #        if models.CustomerService.objects.get(id=obj.id).discount != '':
+    #            total += (float(entry.price * entry.quantity) * (1 - (int(models.CustomerService.objects.get(id=obj.id).discount)/100))) * (1 + float(models.CustomerService.objects.get(id=obj.id).payment))
+    #        else:
+    #            total += float(entry.price * entry.quantity) * (1 + float(models.CustomerService.objects.get(id=obj.id).payment))
+#
+#        return total
+#    total.short_description = 'total'
 '''
     def finish(self, obj):
         entries = models.ServiceItem.objects.filter(customerservice=models.CustomerService.objects.get(id=obj.id))

@@ -104,7 +104,7 @@
                                             <tr>
                                                 <td><a href="{% url 'customer_service:update' pk=cs.pk%}">{{cs}}</a></td>
                                                 <td>{{cs.user}}</td>
-                                                <td>{{cs.customer}}</td>
+                                                <td>{{cs.customer.name}}</td>
                                                 <td>{{cs.date|date:"d/m/Y"}}</td>
                                                 <td>{{cs.total_service}}</td>
 
