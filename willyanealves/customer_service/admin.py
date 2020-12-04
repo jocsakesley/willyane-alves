@@ -8,7 +8,7 @@ class ServiceItemInline(admin.TabularInline):
     extra = 1
 
 class ServiceItemAdmin(admin.ModelAdmin):
-    list_display = ('customerservice', 'service', 'quantity', 'price', 'total')
+    list_display = ('customerservice', 'service', 'quantity', 'total')
 
 class CustomerServiceAdmin(admin.ModelAdmin):
     model = models.CustomerService

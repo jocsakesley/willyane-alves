@@ -11,14 +11,14 @@ class ServiceItem(models.Model):
     quantity = models.PositiveSmallIntegerField(default=1)
     customerservice = models.ForeignKey('CustomerService', on_delete=models.CASCADE, related_name='serviceitem')
 
-    @property
-    def price(self):
-        return self.service.price
+    #@property
+    #def price(self):
+    #    return self.service.price
 
     @property
     def total(self):
         total = 0
-        subtotal = self.quantity * self.price
+        subtotal = self.quantity * self.service.price
         if self.customerservice.discount:
             total += float(subtotal) * (1 - (int(self.customerservice.discount) / 100))
         else:

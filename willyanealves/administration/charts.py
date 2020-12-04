@@ -22,16 +22,7 @@ def barchart_billing_profit(date_bp, total, profit):
         plot_bgcolor="white",
         margin=dict(t=10, l=10, b=10, r=10)
     )
-    #fig = go.Figure(data=go.Bar(x=df['date'], y=df['total'], marker_color='rgb(26, 118, 255)', opacity=0.6, showlegend=False, hovertemplate=
-    #    "<b>R$%{y:.2f}</b><br>" +
-    #    "Data: %{x|%d/%m/%Y}<br>" +
-    #    "Total: R$%{y:.2f}<br>" +
-    #    "<extra></extra>"), layout={'template':'plotly_white','barmode':'overlay'})
-    #fig.add_trace(go.Scatter(x=df['date'], y=df['profit'], line=dict(color='rgb(40, 167, 69)', width=2), showlegend=False, hovertemplate=
-    #    "<b>R$%{y:.2f}</b><br>" +
-    #    "Data: %{x|%d/%m/%Y}<br>" +
-    #    "Lucro: R$%{y:.2f}<br>" +
-    #    "<extra></extra>"))
+
     fig.update_traces(hovertemplate=
                       "<b>R$%{y:.2f}</b><br>" +
                       "Data: %{x|%d/%m/%Y}<br>" +

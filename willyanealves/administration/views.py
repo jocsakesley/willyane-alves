@@ -1,57 +1,51 @@
 from django.contrib.auth.decorators import login_required
+from django.db.models import Sum, F, FloatField, Count
 from django.shortcuts import render
-from willyanealves.customers.models import Customer
-from willyanealves.customer_service.models import CustomerService, ServiceItem
+from willyanealves.customer_service.models import CustomerService
 from .charts import barchart_billing_profit, barchart_customer_service
 from datetime import datetime
 from .forms import DashForm
-# Create your views here.
 
-@login_required(login_url='/accounts/')
+
+#@login_required(login_url='/accounts/')
 def dashboard(request):
     form = DashForm()
     customer_service = CustomerService.objects.prefetch_related('serviceitem')
-    customer_service_month = []
-    total_billing = 0
-    total_profit_month = 0
-    date_bp, total, profit = [], [], []
-    date_cs, service, qtd = [], [], []
     if request.method == 'POST':
         form = DashForm(request.POST)
         if form.is_valid():
-            for cs in customer_service:
-                if cs.date.month == int(form.cleaned_data['month']) and cs.date.year == int(form.cleaned_data['year']):
-                    total_billing += float(cs.total_service.strip("R$ "))
-                    customer_service_month.append(cs)
-                    date_bp.append(cs.date)
-                    total.append(float(cs.total_service.strip("R$ ")))
-                    total_profit_item = 0
-                    for si in cs.serviceitem.select_related('service'):
-                        total_profit_month += float(si.profit)
-                        total_profit_item += float(si.profit)
-                        date_cs.append(si.customerservice.date)
-                        service.append(si.service.service)
-                        qtd.append(si.quantity)
-                    profit.append(total_profit_item)
+            date_bp = [dbp[0] for dbp in customer_service.filter(date__month=form.cleaned_data['month'], date__year=form.cleaned_data['year']).values_list('date')]
+            total = [tb[0] for tb in customer_service.filter(date__month=form.cleaned_data['month'], date__year=form.cleaned_data['year'])\
+                .annotate(total=Sum((F('serviceitem__service__price')*F('serviceitem__quantity'))*(1-(F('serviceitem__customerservice__discount')/100)), output_field=FloatField()))\
+                .values_list('total')]
+            total_billing = sum(total)
+            customer_service_month = customer_service.filter(date__month=form.cleaned_data['month'], date__year=form.cleaned_data['year']).aggregate(Count('id'))['id__count']
+            date_cs = [dcs[0] for dcs in customer_service.filter(date__month=form.cleaned_data['month'], date__year=form.cleaned_data['year']).values_list('serviceitem__customerservice__date')]
+            profit = [x[0] for x in customer_service.filter(date__month=form.cleaned_data['month'], date__year=form.cleaned_data['year'])\
+                .annotate(total=Sum((F('serviceitem__service__price')*F('serviceitem__quantity'))*(1-(F('serviceitem__customerservice__discount')/100))-F('serviceitem__service__cost'),
+                                    output_field=FloatField())).values_list('total')]
+            total_profit_month = sum(profit)
+            service = [s[0] for s in customer_service.filter(date__month=form.cleaned_data['month'], date__year=form.cleaned_data['year']).values_list('serviceitem__service__service')]
+            qtd = [q[0] for q in customer_service.filter(date__month=form.cleaned_data['month'], date__year=form.cleaned_data['year']).values_list('serviceitem__quantity')]
+
+
     else:
-        for cs in customer_service:
-            if cs.date.month == datetime.today().month and cs.date.year == datetime.today().year:
-                total_billing += float(cs.total_service.strip("R$ "))
-                customer_service_month.append(cs)
-                date_bp.append(cs.date)
-                total.append(float(cs.total_service.strip("R$ ")))
-                total_profit_item = 0
-                for si in cs.serviceitem.select_related('service'):
-                    total_profit_month += float(si.profit)
-                    total_profit_item += float(si.profit)
-                    date_cs.append(si.customerservice.date)
-                    service.append(si.service.service)
-                    qtd.append(si.quantity)
-                profit.append(total_profit_item)
+        date_bp = [dbp[0] for dbp in customer_service.filter(date__month=datetime.today().month, date__year=datetime.today().year).values_list('date')]
+        total = [tb[0] for tb in customer_service.filter(date__month=datetime.today().month, date__year=datetime.today().year) \
+                     .annotate(total=Sum((F('serviceitem__service__price') * F('serviceitem__quantity')) * (1 - (F('serviceitem__customerservice__discount') / 100)), output_field=FloatField())) \
+                     .values_list('total')]
+        total_billing = sum(total)
+        customer_service_month = customer_service.filter(date__month=datetime.today().month, date__year=datetime.today().year).aggregate(Count('id'))['id__count']
+        date_cs = [dcs[0] for dcs in customer_service.filter(date__month=datetime.today().month, date__year=datetime.today().year).values_list('serviceitem__customerservice__date')]
+        profit = [x[0] for x in customer_service.filter(date__month=datetime.today().month, date__year=datetime.today().year).annotate(total=Sum((F('serviceitem__service__price') * F('serviceitem__quantity')) *
+            (1 - (F('serviceitem__customerservice__discount') / 100)) - F('serviceitem__service__cost'),output_field=FloatField())).values_list('total')]
+        total_profit_month = sum(profit)
+        service = [s[0] for s in customer_service.filter(date__month=form.cleaned_data['month'], date__year=form.cleaned_data['year']).values_list('serviceitem__service__service')]
+        qtd = [q[0] for q in customer_service.filter(date__month=form.cleaned_data['month'], date__year=form.cleaned_data['year']).values_list('serviceitem__quantity')]
 
 
     context = {
-        'customer_service_month': len(customer_service_month),
+        'customer_service_month': customer_service_month,
         'customer_service': customer_service,
         'barchart': barchart_billing_profit(date_bp, total, profit),
         'barchartcs': barchart_customer_service(date_cs, service, qtd),
