@@ -35,11 +35,11 @@ class ServiceItem(models.Model):
 
 class CustomerService(models.Model):
     DISCOUNTS = (
-        ('0', "0%"),
-        ('5', "5%"),
-        ('10', "10%"),
-        ('15', "15%"),
-        ('20', "20%"),
+        (0, "0%"),
+        (5, "5%"),
+        (10, "10%"),
+        (15, "15%"),
+        (20, "20%"),
     )
     PAYMENTS = (
         ('0', 'À vista'),
@@ -52,7 +52,7 @@ class CustomerService(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.DO_NOTHING, verbose_name="Cliente")
     date = models.DateField("Data")
     start = models.TimeField("Hora de início")
-    discount = models.CharField("Desconto", blank=True, max_length=2, choices=DISCOUNTS)
+    discount = models.IntegerField("Desconto", blank=True, max_length=2, choices=DISCOUNTS)
     payment = models.CharField("Pagamento", max_length=20, choices=PAYMENTS)
 
     @property
