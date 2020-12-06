@@ -1,10 +1,16 @@
 from django.db import models
 from datetime import datetime, timedelta
 from django.contrib.auth.models import User
+from django.db.models import Sum, F, FloatField, ExpressionWrapper
+
 from willyanealves.customers.models import Customer
 from willyanealves.services.models import Service
 
 # Create your models here.
+
+class ServiceItemManager(models.Manager):
+    def total_time(self):
+        return ServiceItem.quantity * ServiceItem.service.duration
 
 class ServiceItem(models.Model):
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
@@ -14,21 +20,28 @@ class ServiceItem(models.Model):
     #@property
     #def price(self):
     #    return self.service.price
-
    # @property
-   # def total(self):
-   #     total = 0
-    #    subtotal = self.quantity * self.service.price
-    #    if self.customerservice.discount:
-    #        total += float(subtotal) * (1 - (int(self.customerservice.discount) / 100))
-    #    else:
-    #        total += subtotal
-    #    return total
+   # def total_time(self):
+    #    return self.service.duration * self.quantity
+
+    #total_time = property(total_time)
+
+    @property
+    def total(self):
+        total = 0
+        subtotal = self.quantity * self.service.price
+        if self.customerservice.discount:
+            total += float(subtotal) * (1 - (int(self.customerservice.discount) / 100))
+        else:
+            total += subtotal
+        return total
 
     #@property
     #def profit(self):
     #    profit = self.total - float(self.service.cost)
     #    return profit
+    def __unicode__(self):
+        return self.total_time
 
     def __str__(self):
         return self.service.service
@@ -55,12 +68,11 @@ class CustomerService(models.Model):
     discount = models.IntegerField("Desconto", blank=True, max_length=2, choices=DISCOUNTS)
     payment = models.CharField("Pagamento", max_length=20, choices=PAYMENTS)
 
-  #  @property
-  #  def total_service(self):
-  #      total = 0
-  #      for si in self.serviceitem.all():
-  #          total += float(si.total)
-  #      return f"R$ { total:.2f}"
+    @property
+    def total_service(self):
+        total_service = sum([ts[0] for ts in self.serviceitem.annotate(total=ExpressionWrapper(Sum(F('service__price') * F('quantity') *(1 - (F('customerservice__discount')* 1.0 /100))), output_field=FloatField())).values_list('total')])
+        return f"R$ {total_service:.2f}"
+
 
    # @property
    # def finish(self):

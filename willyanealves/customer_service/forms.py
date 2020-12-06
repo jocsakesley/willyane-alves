@@ -32,6 +32,6 @@ class CustomerServiceForm(forms.ModelForm):
 class ServiceItemForm(forms.ModelForm):
     class Meta:
         model = ServiceItem
-        fields = '__all__'
+        exclude = '__all__'
 
 
