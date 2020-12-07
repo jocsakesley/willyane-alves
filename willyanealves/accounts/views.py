@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from .forms import RegisterForm, LoginForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-# Create your views here.
+
 
 def login_user(request):
     form = LoginForm()
@@ -11,6 +11,7 @@ def login_user(request):
         return login_ok(request)
     else:
         return render(request, 'accounts/login.html', {'form': form})
+
 
 def login_ok(request):
     username = request.POST['user']
@@ -24,6 +25,7 @@ def login_ok(request):
         print(username, password)
         return render(request, 'accounts/login.html', {'form': LoginForm()})
 
+
 def logout_user(request):
     logout(request)
     return redirect('login_user')
@@ -35,6 +37,7 @@ def register(request):
         return create(request)
     else:
         return render(request, 'accounts/register.html', {'form': form})
+
 
 def create(request):
     form = RegisterForm(request.POST)
@@ -49,10 +52,12 @@ def create(request):
         messages.info(request, "Usuário ou email já cadastrado", extra_tags="alert-warning")
         return render(request, 'accounts/register.html', {'form': form})
 
-    User.objects.create_user(form.cleaned_data['user'], email=form.cleaned_data['email'], password=form.cleaned_data['password'],
-                             first_name=form.cleaned_data['name'], last_name=form.cleaned_data['last_name'])
+    User.objects.create_user(
+        form.cleaned_data['user'],
+        email=form.cleaned_data['email'],
+        password=form.cleaned_data['password'],
+        first_name=form.cleaned_data['name'],
+        last_name=form.cleaned_data['last_name']
+    )
     messages.success(request, "Usuário criado com sucesso!", extra_tags="alert-success")
     return render(request, 'accounts/register.html', {'form': form})
-
-
-

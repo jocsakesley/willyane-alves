@@ -5,7 +5,6 @@ from .forms import CustomerServiceForm, ServiceItemForm
 from .models import CustomerService, ServiceItem
 from django.contrib.auth.models import User
 from willyanealves.services.models import Service
-# Create your views here.
 
 
 def create_customer_service(request):
