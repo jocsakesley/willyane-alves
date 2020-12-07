@@ -3,12 +3,14 @@ from django.http import Http404
 from django.shortcuts import render, redirect
 from .forms import ServiceForm
 from .models import Service
-# Create your views here.
+
+
 def register_service(request):
     form = ServiceForm()
     if request.method == "POST":
         return create_service(request)
     return render(request, "services/register_service.html", {"form": form})
+
 
 def create_service(request):
     form = ServiceForm(request.POST)
@@ -18,9 +20,11 @@ def create_service(request):
     messages.success(request, "Serviço cadastrado com sucesso", extra_tags="alert-success")
     return render(request, "services/register_service.html", {"form": form})
 
+
 def list_services(request):
     services = Service.objects.all()
     return render(request, "services/list_services.html", {"services": services})
+
 
 def detail_service(request, pk):
     try:
@@ -29,15 +33,18 @@ def detail_service(request, pk):
         raise Http404
     return render(request, "services/detail_service.html", {"service": service})
 
+
 def delete_service(request, pk):
     Service.objects.get(pk=pk).delete()
     return redirect("list_services")
+
 
 def update_service(request, pk):
     service = Service.objects.get(pk=pk)
     if request.method == "POST":
         return update(request, pk)
     return render(request, "services/update_service.html", {"form": ServiceForm(), "service": service})
+
 
 def update(request, pk):
     form = ServiceForm(request.POST)

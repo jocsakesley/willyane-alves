@@ -7,12 +7,14 @@ from .models import Customer
 from django.db.models import Q, Value
 from django.db.models.functions import Concat
 
+
 @login_required(login_url='/accounts/')
 def register_customer(request):
     form = CustomersForm()
     if request.method == "POST":
         return create(request)
     return render(request, 'customers/register_customer.html', {'form': form})
+
 
 @login_required(login_url='/accounts/')
 def create(request):
@@ -28,13 +30,15 @@ def create(request):
         messages.success(request, "Cliente cadastrado com sucesso!", extra_tags="alert-success")
     except Exception as e:
 
-            messages.error(request, f"Ocorreu um erro! {e}", extra_tags="alert-danger")
+        messages.error(request, f"Ocorreu um erro! {e}", extra_tags="alert-danger")
     return render(request, 'customers/register_customer.html', {'form': form})
+
 
 @login_required(login_url='/accounts/')
 def list_customers(request):
     customers = Customer.objects.all().order_by("-created_at")
     return render(request, "customers/list_customers.html", {"customers": customers})
+
 
 @login_required(login_url='/accounts/')
 def detail_customers(request, pk):
@@ -44,15 +48,18 @@ def detail_customers(request, pk):
         raise Http404
     return render(request, "customers/detail_customers.html", {'customer_detail': customer_detail})
 
+
 @login_required(login_url='/accounts/')
 def search_customer(request):
     word = request.GET.get("word")
     fields = Concat('name', Value(' '), 'last_name')
     if word:
-        customers = Customer.objects.annotate(full_name=fields).filter(Q(full_name__icontains=word) | Q(cpf__icontains=word))
+        customers = Customer.objects.annotate(full_name=fields).filter(
+            Q(full_name__icontains=word) | Q(cpf__icontains=word))
     else:
         customers = Customer.objects.all().order_by('-created_at')
     return render(request, "customers/search.html", {"customers": customers})
+
 
 @login_required(login_url='/accounts/')
 def delete_customer(request, pk):
@@ -62,6 +69,7 @@ def delete_customer(request, pk):
         messages.info(request, "Cliente não encontrado")
     return redirect('list_customers')
 
+
 @login_required(login_url='/accounts/')
 def update_customer(request, pk):
     customer = Customer.objects.get(pk=pk)
@@ -70,7 +78,8 @@ def update_customer(request, pk):
     else:
         return render(request, "customers/update_customer.html", {"form": CustomersForm(), "customer": customer})
 
-def update(request,pk):
+
+def update(request, pk):
     form = CustomersForm(request.POST, request.FILES)
     customer = Customer.objects.get(pk=pk)
 

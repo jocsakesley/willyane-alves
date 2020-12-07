@@ -1,6 +1,7 @@
 from django import forms
 from datetime import datetime
 
+
 class DashForm(forms.Form):
     MONTH = (
         (1, "Janeiro"),
@@ -18,4 +19,5 @@ class DashForm(forms.Form):
     )
     YEAR = ()
     month = forms.IntegerField(label="Mês", widget=forms.Select(choices=MONTH), initial=datetime.today().month)
-    year = forms.IntegerField(label="Ano", widget=forms.Select(choices=zip(range(2018, datetime.today().year + 1), range(2018, datetime.today().year + 1))), initial=datetime.today().year)
+    year = forms.IntegerField(label="Ano", widget=forms.Select(choices=zip(
+        range(2018, datetime.today().year + 1), range(2018, datetime.today().year + 1))), initial=datetime.today().year)
