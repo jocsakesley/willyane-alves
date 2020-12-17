@@ -8,23 +8,14 @@ from willyanealves.services.models import Service
 
 # Create your models here.
 
-class ServiceItemManager(models.Manager):
-    def total_time(self):
-        return ServiceItem.quantity * ServiceItem.service.duration
 
 class ServiceItem(models.Model):
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Usuário")
+    comission = models.PositiveIntegerField("Comissão (%)", default=100)
     customerservice = models.ForeignKey('CustomerService', on_delete=models.CASCADE, related_name='serviceitem')
 
-    #@property
-    #def price(self):
-    #    return self.service.price
-   # @property
-   # def total_time(self):
-    #    return self.service.duration * self.quantity
-
-    #total_time = property(total_time)
 
     @property
     def total(self):
@@ -36,12 +27,6 @@ class ServiceItem(models.Model):
             total += subtotal
         return total
 
-    #@property
-    #def profit(self):
-    #    profit = self.total - float(self.service.cost)
-    #    return profit
-    def __unicode__(self):
-        return self.total_time
 
     def __str__(self):
         return self.service.service
@@ -61,11 +46,11 @@ class CustomerService(models.Model):
         ('0.11', '2x'),
         ('0.1273', '3x'),
     )
-    user = models.ForeignKey(User, on_delete=models.DO_NOTHING, verbose_name="Usuário")
+    #user = models.ForeignKey(User, on_delete=models.DO_NOTHING, verbose_name="Usuário")
     customer = models.ForeignKey(Customer, on_delete=models.DO_NOTHING, verbose_name="Cliente")
     date = models.DateField("Data")
     start = models.TimeField("Hora de início")
-    discount = models.IntegerField("Desconto", blank=True, max_length=2, choices=DISCOUNTS)
+    discount = models.IntegerField("Desconto", blank=True, choices=DISCOUNTS)
     payment = models.CharField("Pagamento", max_length=20, choices=PAYMENTS)
 
     @property

@@ -12,7 +12,7 @@ class ServiceItemAdmin(admin.ModelAdmin):
 
 class CustomerServiceAdmin(admin.ModelAdmin):
     model = models.CustomerService
-    list_display = ('id','user', 'customer', 'date', 'start', 'discount', ) #'total_service')
+    list_display = ('id','customer', 'date', 'start', 'discount', ) #'total_service')
     inlines = [
         ServiceItemInline
     ]

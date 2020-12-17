@@ -32,8 +32,8 @@ def create(request):
         'form_serviceitem': form_serviceitem,
     }
     if form.is_valid() and form_serviceitem.is_valid():
-        client = form.save()
-        form_serviceitem.instance = client
+        cs = form.save()
+        form_serviceitem.instance = cs
         form_serviceitem.save()
         messages.success(request, "Atendimento registrado com sucesso", extra_tags="alert-success")
         return render(request, "customer_service/create_customer_service.html", context)

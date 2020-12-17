@@ -11,9 +11,9 @@
                             </div>
                             <div class="card-body">
 
-                          {% for message in messages %}
-                          <div class="alert {{message.tags}}">{{message}}</div>
-                          {%endfor%}
+                            {% for message in messages %}
+                            <div class="alert {{message.tags}}">{{message}}</div>
+                             {%endfor%}
                             <form method="POST" enctype="multipart/form-data" action=".">{% csrf_token %}
                               <div class="form-row">
                                 <div class="form-group col-md-12">
@@ -39,10 +39,48 @@
                                   {{form.cost.errors}}
                                     {{form.cost|add_class:"form-control"}}
                                 </div>
-                              <button type="submit" class="btn btn-primary">Cadastrar</button>
+                              </div>
+                                  <div class="form-row">
+                                          <div class="form-group col-md-8">
+                                                    <p>Item</p>
+                                          </div>
+                                           <div class="form-group col-md-3">
+                                                    <p>Quantidade</p>
+                                          </div>
+
+                                      </div>
+                                            {{form_kititem.management_form}}
+                                      <div class="form-row inlineform">
+                                                {%for fki in form_kititem %}
+                                          <div class="form-group col-md-8">
+                                                    {{fki.item|add_class:"form-control"}}
+                                          </div>
+                                          <div class="form-group col-md-3">
+                                                    {{fki.quantity|add_class:"form-control"}}
+                                          </div>
+{{stock.quantity}}
+
+                                                {%endfor%}
+                                      </div>
+                                    <button type="submit" class="btn btn-primary">Cadastrar</button>
+                                </div>
+
                             </form>
                           </div>
             </div>
       </div>
 </div>
+{%endblock%}
+{%block script%}
+<script type="text/javascript">
+    $(function() {
+        $('.inlineform').formset({
+            prefix: '{{ form_kititem.prefix }}',
+            addText: "Novo",
+            deleteText: "Remover",
+            addCssClass: "btn btn-success",
+            deleteCssClass: "btn btn-danger btn-sm",
+        });
+    })
+</script>
 {%endblock%}

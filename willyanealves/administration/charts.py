@@ -3,15 +3,17 @@ import plotly.express as px
 import pandas as pd
 from willyanealves.customer_service.models import CustomerService, ServiceItem
 
-
 def barchart_billing_profit(date_bp, total, profit):
+
     df = pd.DataFrame({"date": date_bp, "total": total, "profit": profit})
     df = df.groupby('date')[['total','profit']].sum()
     df = pd.DataFrame(df)
     df = df.reset_index()
-
-    fig = px.bar(df, x='date', y='total')
-
+    try:
+        fig = px.bar(df, x='date', y='total')
+    except:
+        df = pd.DataFrame([[0,0],[0,0]], index=['date', 'total']).T
+        fig = px.bar(df, x='date', y='total')
     fig.add_scatter(x=df['date'], y=df['profit'], hovertemplate=
                       "<b>R$%{y:.2f}</b><br>" +
                       "Data: %{x|%d/%m/%Y}<br>" +
@@ -41,8 +43,12 @@ def barchart_customer_service(date_cs, service, qtd):
     df = df.groupby(['date','service'])['quantity'].sum()
     df = pd.DataFrame(df)
     df = df.reset_index()
-    df = df.tail(5)
-    fig = px.bar(df, x=df['date'], y=df['quantity'], color=df['service'], barmode='group')
+    try:
+        fig = px.bar(df, x=df['date'], y=df['quantity'], color=df['service'], barmode='group')
+    except:
+        df = pd.DataFrame([[0,0],[0,0],[0,0]], index=['date', 'service', 'quantity']).T
+        fig = px.bar(df, x=df['date'], y=df['quantity'], color=df['service'], barmode='group')
+
     fig.update_layout(
         plot_bgcolor="white",
         margin=dict(t=10, l=10, b=10, r=10),

@@ -33,6 +33,13 @@ ALLOWED_HOSTS = config("ALLOWED_HOSTS", default=[], cast=Csv())
 # Application definition
 
 INSTALLED_APPS = [
+    'willyanealves.stock.apps.StockConfig',
+    'willyanealves.core',
+    'willyanealves.accounts',
+    'willyanealves.administration',
+    'willyanealves.customers',
+    'willyanealves.services',
+    'willyanealves.customer_service',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,12 +48,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'widget_tweaks',
     'django_extensions',
-    'willyanealves.core',
-    'willyanealves.accounts',
-    'willyanealves.administration',
-    'willyanealves.customers',
-    'willyanealves.services',
-    'willyanealves.customer_service',
     'debug_toolbar',
 ]
 
