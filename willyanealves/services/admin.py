@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from django.contrib import admin
 from .models import Service, KitItem
 # Register your models here.
@@ -15,3 +16,14 @@ class ServiceModelAdmin(admin.ModelAdmin):
 
 admin.site.register(Service, ServiceModelAdmin)
 admin.site.register(KitItem, KitItemAdmin)
+=======
+from django.contrib import admin
+from .models import Service
+
+
+class ServiceModelAdmin(admin.ModelAdmin):
+    list_display = ("service", "price", "cost", "duration", "profit")
+
+
+admin.site.register(Service, ServiceModelAdmin)
+>>>>>>> 2deca4933c26dc4dacde616181fe6ac15f0aff64
