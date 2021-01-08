@@ -1,13 +1,5 @@
-<<<<<<< HEAD
-.will
-.idea
-.env
-db.sqlite3
-staticfiles
-*__pycache__/
-=======
 # Byte-compiled / optimized / DLL files
-__pycache__/
+__pycache__
 *.py[cod]
 *$py.class
 
@@ -116,5 +108,5 @@ venv.bak/
 
 .will
 media/
->>>>>>> 2deca4933c26dc4dacde616181fe6ac15f0aff64
+
 *.pyc

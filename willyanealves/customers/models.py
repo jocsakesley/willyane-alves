@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 from django.db import models
 #import uuid
 
@@ -21,7 +21,7 @@ class Customer(models.Model):
 
     def __str__(self):
         return f"{self.name} {self.last_name}"
-=======
+
 from django.db import models
 
 
@@ -42,4 +42,4 @@ class Customer(models.Model):
 
     def __str__(self):
         return f"{self.name} {self.last_name}"
->>>>>>> 2deca4933c26dc4dacde616181fe6ac15f0aff64
+
