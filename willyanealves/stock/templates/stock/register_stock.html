@@ -1,6 +1,49 @@
 {% extends "administration/base_admin.html"%}
+{% load widget_tweaks %}
 {%block content%}
-<form method="POST" action=".">
-{{form}}
-</form>
+<div class="container-fluid">
+      <div class="container" style="padding-top:20px">
+            <div class="card mb-4">
+                <div class="card-header">
+                    Estoque
+                </div>
+                <div class="card-body">
+                    <form method="POST" action=".">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-6">
+                                <label for={{form.item.id_for_label}}>{{form.item.label}}</label>
+                                {{form.item.errors}}
+                                {{form.item|add_class:"form-control"}}
+                            </div>
+                            <div class="col-6">
+                                <label for={{form.description.id_for_label}}>{{form.description.label}}</label>
+                                {{form.description.errors}}
+                                {{form.description|add_class:"form-control"}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <label for={{form.price.id_for_label}}>{{form.price.label}}</label>
+                                {{form.price.errors}}
+                                {{form.price|add_class:"form-control"}}
+                            </div>
+                            <div class="col-4">
+                                <label for={{form.quantity.id_for_label}}>{{form.quantity.label}}</label>
+                                {{form.quantity.errors}}
+                                {{form.quantity|add_class:"form-control"}}
+                            </div>
+                            <div class="col-4">
+                                <label for={{form.type.id_for_label}}>{{form.type.label}}</label>
+                                {{form.type.errors}}
+                                {{form.type|add_class:"form-control"}}
+                            </div>
+                            
+                        </div><br>
+                            <button type="submit" class="btn btn-primary">Cadastrar</button>
+                    </form>
+                </div>
+            </div>
+      </div>
+</div>
 {%endblock%}

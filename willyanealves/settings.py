@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'willyanealves.customers',
     'willyanealves.services',
     'willyanealves.customer_service',
+    'willyanealves.kit',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

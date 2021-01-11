@@ -49,16 +49,13 @@
                                           </div>
 
                                       </div>
-                                            {{form_kititem.management_form}}
+                                            {{form_kitservice.management_form}}
                                       <div class="form-row inlineform">
-                                                {%for fki in form_kititem %}
+                                                {%for fks in form_kitservice %}
                                           <div class="form-group col-md-8">
-                                                    {{fki.item|add_class:"form-control"}}
+                                                    {{fks.kit|add_class:"form-control"}}
                                           </div>
-                                          <div class="form-group col-md-3">
-                                                    {{fki.quantity|add_class:"form-control"}}
-                                          </div>
-{{stock.quantity}}
+                                          {{stock.quantity}}
 
                                                 {%endfor%}
                                       </div>
@@ -75,7 +72,7 @@
 <script type="text/javascript">
     $(function() {
         $('.inlineform').formset({
-            prefix: '{{ form_kititem.prefix }}',
+            prefix: '{{ form_kitservice.prefix }}',
             addText: "Novo",
             deleteText: "Remover",
             addCssClass: "btn btn-success",

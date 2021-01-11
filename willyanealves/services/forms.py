@@ -1,6 +1,6 @@
 
 from django import forms
-from .models import KitItem, Service
+from .models import KitService, Service
 
 class ServiceForm(forms.ModelForm):
     DURATION_CHOICES = [
@@ -16,7 +16,7 @@ class ServiceForm(forms.ModelForm):
         model = Service
         fields = '__all__'
 
-class KitItemForm(forms.ModelForm):
+class KitServiceForm(forms.ModelForm):
     class Meta:
-        model = KitItem
+        model = KitService
         fields = '__all__'

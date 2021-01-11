@@ -1,18 +1,17 @@
-
 from django.contrib import admin
-from .models import Service, KitItem
+from .models import Service, KitService
 # Register your models here.
 
-class KitItemInline(admin.TabularInline):
-    model = KitItem
+class KitServiceInline(admin.TabularInline):
+    model = KitService
     extra = 1
 
-class KitItemAdmin(admin.ModelAdmin):
-    list_display = ('item', 'quantity', 'service')
+class KitServiceAdmin(admin.ModelAdmin):
+    list_display = ('kit', 'service')
 
 class ServiceModelAdmin(admin.ModelAdmin):
     list_display = ("service", "price", "cost", "duration", )#"profit")
-    inlines = [KitItemInline]
+    inlines = [KitServiceInline]
 
 admin.site.register(Service, ServiceModelAdmin)
-admin.site.register(KitItem, KitItemAdmin)
+admin.site.register(KitService, KitServiceAdmin)

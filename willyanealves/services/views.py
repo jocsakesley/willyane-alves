@@ -3,18 +3,18 @@ from django.contrib import messages
 from django.forms import inlineformset_factory
 from django.http import Http404
 from django.shortcuts import render, redirect
-from .forms import ServiceForm, KitItemForm
-from .models import Service, KitItem
+from .forms import ServiceForm, KitServiceForm
+from .models import Service, KitService
 from willyanealves.stock.models import Stock
 # Create your views here.
 
 def register_service(request):
     form = ServiceForm()
-    form_kititem_factory = inlineformset_factory(Service, KitItem, form=KitItemForm, extra=1)
-    form_kititem = form_kititem_factory()
+    form_kitservice_factory = inlineformset_factory(Service, KitService, form=KitServiceForm, extra=1)
+    form_kitservice = form_kitservice_factory()
     context = {
         'form':form,
-        'form_kititem': form_kititem
+        'form_kitservice': form_kitservice
     }
     if request.method == "POST":
         return create_service(request)
@@ -23,17 +23,17 @@ def register_service(request):
 
 def create_service(request):
     form = ServiceForm(request.POST)
-    form_kititem_factory = inlineformset_factory(Service, KitItem, form=KitItemForm)
-    form_kititem = form_kititem_factory(request.POST, prefix='kititem')
+    form_kitservice_factory = inlineformset_factory(Service, KitService, form=KitServiceForm)
+    form_kitservice = form_kitservice_factory(request.POST, prefix='kitservice')
     context = {
         'form': form,
-        'form_kititem': form_kititem
+        'form_kitservice': form_kitservice
     }
-    if form.is_valid() and form_kititem.is_valid():
+    if form.is_valid() and form_kitservice.is_valid():
         s = form.save()
-        form_kititem.instance = s
-        form_kititem.save()
-        for ki in KitItem.objects.all():
+        form_kitservice.instance = s
+        form_kitservice.save()
+        for ki in KitService.objects.all():
             for s in Stock.objects.all():
                 if ki.item.item == s.item and ki.service.service == form.cleaned_data['service']:
                     s.quantity -= ki.quantity
@@ -46,9 +46,7 @@ def create_service(request):
 
 
 def list_services(request):
-    services = Service.objects.prefetch_related('kititem')
-
-
+    services = Service.objects.prefetch_related('kitservice')
     return render(request, "services/list_services.html", {"services": services })
 
 

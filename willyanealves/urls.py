@@ -28,6 +28,7 @@ urlpatterns = [
     path('services/', include('willyanealves.services.urls')),
     path('stock/', include('willyanealves.stock.urls')),
     path('customer_service/', include('willyanealves.customer_service.urls')),
+    path('kit/', include('willyanealves.kit.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
